@@ -1,0 +1,99 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: "FontGame" ;
+    src: url(../fonts/Pony.ttf);
+}
+body{
+    font-family:"FontGame";
+}
+hr{
+    border: 1px solid white;
+}
+
+.ghe {
+    border: 3px solid orange;
+    width: 65px;
+    height: 37px;
+    font-size: 15px;
+    margin-left: 2%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    background: wheat;
+}
+.firstChar {
+    color: yellow;
+    font-size: 35px;
+    margin-right: 15px;
+
+}
+
+.screen {
+    border-bottom: 50px solid rgb(255, 159, 95);
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    height: 100;
+    width: 80%;
+    filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
+    font-size: 25px;
+    color: #fff;
+}
+
+
+
+.gheDangChon {
+    background: rgb(109, 238, 109) !important;
+    border: 3px solid rgb(109, 238, 109) !important;
+    color: #000;
+
+    cursor: pointer;
+    border-radius: 5px;
+    width: 65px;
+    height: 35px;
+}
+.gheDuocChon {
+    border: 3px solid #FFD700;
+
+    background: #FFD700;
+    color: #000;
+
+    cursor: no-drop !important;
+    border-radius: 5px;
+    width: 65px;
+    height: 35px;
+
+}
+.gheVip{
+    border: 3px solid #FF4500;
+    color: #000;
+
+    cursor: pointer;
+    border-radius: 5px;
+    width: 65px;
+    height: 35px;
+    background-color: #FF4500
+}
+.gheDaDuocDat{
+    border: 3px solid blueviolet;
+    color: #000;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 65px;
+    height: 35px;
+    background-color: blueviolet;
+}
+
+/* home */
+.bgMovie{
+    background-image: url(../img/195716-passeio-das-aguas-cinema.jpg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.bgMovie>div{
+    border: 20px solid lightgray;
+}
