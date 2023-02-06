@@ -17,9 +17,23 @@ export default function InfoTicket() {
           <td>
             <button
               onClick={() => {
-                dispatch({
-                  type: DELETE_TICKET,
-                  gheDangDat: gheDangDat.soGhe,
+                swal({
+                  title: "Are you sure?",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+                }).then((willDelete) => {
+                  if (willDelete) {
+                    swal("Delete complete", {
+                      icon: "success",
+                    });
+                    dispatch({
+                      type: DELETE_TICKET,
+                      gheDangDat: gheDangDat.soGhe,
+                    });
+                  } else {
+                    swal("Your imaginary file is safe!");
+                  }
                 });
               }}
               className="btn btn-danger"
