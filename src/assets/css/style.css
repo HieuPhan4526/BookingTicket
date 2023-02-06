@@ -24,13 +24,6 @@ hr{
     border-radius: 5px;
     background: wheat;
 }
-.firstChar {
-    color: yellow;
-    font-size: 35px;
-    margin-right: 15px;
-
-}
-
 .screen {
     border-bottom: 50px solid rgb(255, 159, 95);
     border-left: 50px solid transparent;
@@ -96,4 +89,84 @@ hr{
 }
 .bgMovie>div{
     border: 20px solid lightgray;
+}
+
+
+.Sign{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.Sign-img img{
+    width: 100%;
+    height: 500px;
+    border-radius: 20px;
+    animation: moveImg 2s infinite;
+}
+.Sign-content{
+    padding: 100px;
+    box-shadow: 5px 10px 18px #888888;
+    border-radius: 20px;
+}
+.Sign-content h1{
+    padding: 30px 0 ;
+    text-align: center;
+}
+.Sign-content input{
+    padding: 5px 10px 5px 40px;
+    line-height: 20px;
+    display: block;
+    font-size: 13px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #9C9C9C;
+    
+}
+.form-input{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 15px 0;
+}
+.iconForm{
+    position: absolute;
+    left: 11px;
+    font-size: 22px;    
+    color: #9400D3;
+}
+.button-Sign{
+    margin: 10px 0;
+    display: block;
+    width: 100%;
+    background-color: #9400D3;
+    color: white;
+    font-size: 20px;
+}
+.icon-contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-contact span{
+    color: cornflowerblue;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+
+}
+.SignUp{
+    max-width: 560px;
+    margin: auto;
+    margin-top: 100px;
+}
+.errors-Vali{
+    color: red;
+    font-size: 15px;
+}
+.addAvatar label i {
+    padding: 10px;
+    font-size: 20px;
+    color: #9400D3;
 }

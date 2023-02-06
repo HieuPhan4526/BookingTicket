@@ -77,6 +77,23 @@ export default function InfoTicket() {
           </tr>
         </tfoot>
       </table>
+      <button
+        className="btn btn-success"
+        onClick={() => {
+          danhSachGheDangDat.map((gheDangDat, index) => {
+            if (gheDangDat) {
+              return swal({
+                title: "Good job!",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "OK!",
+              });
+            }
+          });
+        }}
+      >
+        Đặt vé
+      </button>
     </div>
   );
 }
