@@ -1,41 +1,50 @@
 import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { NavLink, Navigate } from "react-router-dom";
+
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { LOGIN } from "../redux/Types/AccountType";
-import swal from "sweetalert";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
+import { USER_LOGIN } from "../redux/Types/AccountType";
 import { history } from "../App";
+import swal from "sweetalert";
 
 export default function Login(props) {
   const dispatch = useDispatch();
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      passWord: "",
-    },
-    validationSchema: Yup.object({
-      //Các hàm validation của từng trường dữ liệu
-      email: Yup.string()
-        .required("Email is required")
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email invalidate"),
-      //Ít nhất ký chữ, in hoa, số...
-      passWord: Yup.string().required("Password is required"),
-    }),
-    onSubmit: async (values) => {
-      await dispatch({
-        type: LOGIN,
-        user: values,
-      });
-      await swal({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success",
-        button: "OK!",
-      });
-      history.push("/home");
-    },
-  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+    try {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          await localStorage.setItem(
+            USER_LOGIN,
+            JSON.stringify(user.providerData[0])
+          );
+          await swal({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success",
+            button: "OK!",
+          });
+          history.push("/");
+          // ...
+        })
+        .catch((error) => {
+          swal({
+            title: "Something went wrong",
+            text: "You clicked the button!",
+            icon: "warning",
+            button: "OK!",
+          });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
   return (
     <div className="Sign">
       <div className="Sign-img">
@@ -46,39 +55,20 @@ export default function Login(props) {
       </div>
       <div className="Sign-content">
         <h1>Login</h1>
-        <form onSubmit={formik.handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className="form">
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-envelope"></i>
             </span>
-            <input
-              placeholder="Email"
-              id="email"
-              name="email"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
+            <input placeholder="Email" type="text" />
           </div>
-          {formik.touched.email && formik.errors.email ? (
-            <div className="errors-Vali">{formik.errors.email}</div>
-          ) : null}
+
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-lock"></i>
             </span>
-            <input
-              placeholder="Password"
-              id="passWord"
-              name="passWord"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.passWord}
-            />
+            <input placeholder="Password" type="password" />
           </div>
-          {formik.touched.passWord && formik.errors.passWord ? (
-            <div className="errors-Vali">{formik.errors.passWord}</div>
-          ) : null}
           <p>
             Don't have account yet?
             <span>

@@ -5,9 +5,11 @@ import ChairRow from "../components/ChairRow";
 import InfoTicket from "../components/InfoTicket";
 import { USER_LOGIN } from "../redux/Types/AccountType";
 import { Redirect } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function Home() {
-  const { user } = useSelector((rootReducer) => rootReducer.AccoutReducer);
+  const user = JSON.parse(localStorage.getItem(USER_LOGIN));
   if (!localStorage.getItem(USER_LOGIN)) {
     return <Redirect to="/login" />;
   }
@@ -23,6 +25,7 @@ export default function Home() {
             <button
               onClick={() => {
                 localStorage.removeItem(USER_LOGIN);
+                signOut(auth);
                 history.push("/login");
               }}
               className="btn btn-danger"

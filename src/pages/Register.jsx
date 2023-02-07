@@ -1,124 +1,81 @@
 import React from "react";
-import { useFormik } from "formik";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
-import * as Yup from "yup";
-import { REGISTER } from "../redux/Types/AccountType";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { history } from "../App";
 export default function SignUp() {
   const dispatch = useDispatch();
-  const formik = useFormik({
-    initialValues: {
-      dislayName: "",
-      email: "",
-      phoneNumber: "",
-      passWord: "",
-    },
-    validationSchema: Yup.object({
-      //Các hàm validation của từng trường dữ liệu
-      dislayName: Yup.string().required("Name is required"),
-      email: Yup.string()
-        .required("Email is required")
-        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Email invalidate"),
-      phoneNumber: Yup.string().required("PhoneNumber is required"),
-      passWord: Yup.string().required("Password is required"),
-    }),
-    onSubmit: async (values) => {
-      await await swal({
-        title: "Good job",
-        text: "You clicked the button!",
-        icon: "success",
-        button: "OK!",
-      });
-      history.push("/login");
-    },
-  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email = e.target[1].value;
+    const password = e.target[3].value;
+    try {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          await swal({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success",
+            button: "OK!",
+          });
+          await history.push("login");
+          // ...
+        })
+        .catch((error) => {
+          swal({
+            title: "Something went wrong!",
+            text: "You clicked the button!",
+            icon: "warning",
+            button: "OK!",
+          });
+        });
+    } catch (error) {
+      // console.log(error);
+    }
+  };
   return (
     <div className="SignUp">
       <div className="Sign-content">
         <h1>Register CyberBugs</h1>
-        <form onSubmit={formik.handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className="form">
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-user"></i>
             </span>
-            <input
-              placeholder="Name"
-              id="dislayName"
-              name="dislayName"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.dislayName}
-            />
+            <input placeholder="Name" type="text" />
           </div>
-          {formik.touched.dislayName && formik.errors.dislayName ? (
-            <div className="errors-Vali">{formik.errors.dislayName}</div>
-          ) : null}
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-envelope"></i>
             </span>
-            <input
-              placeholder="Email"
-              id="email"
-              name="email"
-              type="email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
+            <input placeholder="Email" type="text" />
           </div>
-          {formik.touched.email && formik.errors.email ? (
-            <div className="errors-Vali">{formik.errors.email}</div>
-          ) : null}
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-phone"></i>
             </span>
-            <input
-              placeholder="Phone number"
-              id="phoneNumber"
-              name="phoneNumber"
-              type="number"
-              onChange={formik.handleChange}
-              value={formik.values.phoneNumber}
-            />
+            <input placeholder="Phone number" type="number" />
           </div>
-          {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-            <div className="errors-Vali">{formik.errors.phoneNumber}</div>
-          ) : null}
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-lock"></i>
             </span>
-            <input
-              placeholder="Password"
-              id="passWord"
-              name="passWord"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.passWord}
-            />
+            <input placeholder="Password" type="password" />
           </div>
-          {formik.touched.passWord && formik.errors.passWord ? (
-            <div className="errors-Vali">{formik.errors.passWord}</div>
-          ) : null}
+          <button type="submit" className="button-Sign">
+            Register
+          </button>
           <p>
             Already have an account?
             <span>
               <NavLink to="/login">Login Now</NavLink>
             </span>
           </p>
-          {/* <div className="addAvatar">
-            <input style={{ display: "none" }} type="file" id="file" />
-            <label htmlFor="file">
-              <i className="fa fa-file-image"></i>
-              <span>Add avatar</span>
-            </label>
-          </div> */}
-          <button type="submit" className="button-Sign">
-            Register
-          </button>
         </form>
         <div className="icon-contact">
           <span>
