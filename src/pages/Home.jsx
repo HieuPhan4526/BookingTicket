@@ -19,9 +19,8 @@ export default function Home() {
         <div>
           <h2 className="text-warning text-center mt-4">ĐẶT VÉ XEM PHIM</h2>
           <div className="d-flex flex-wrap justify-content-between">
-            <h3 className="info-user text-light font-weight-bold">
-              Email: {user.email}
-            </h3>
+            <h3 className="text-light font-weight-bold">Email: {user.email}</h3>
+            <span className="text-light">Username: {user.displayName}</span>
             <button
               onClick={() => {
                 localStorage.removeItem(USER_LOGIN);

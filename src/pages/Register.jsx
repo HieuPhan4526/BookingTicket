@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { history } from "../App";
 export default function SignUp() {
@@ -10,32 +10,29 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const displayName = e.target[0].value;
     const email = e.target[1].value;
+    const phoneNumber = e.target[2].value;
     const password = e.target[3].value;
     try {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          await swal({
-            title: "Good job!",
-            text: "You clicked the button!",
-            icon: "success",
-            button: "OK!",
-          });
-          await history.push("login");
-          // ...
-        })
-        .catch((error) => {
-          swal({
-            title: "Something went wrong!",
-            text: "You clicked the button!",
-            icon: "warning",
-            button: "OK!",
-          });
-        });
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(res.user, {
+        displayName,
+      });
+      await swal({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "OK!",
+      });
+      await history.push("login");
     } catch (error) {
-      // console.log(error);
+      swal({
+        title: "Something went wrong!",
+        text: "You clicked the button!",
+        icon: "warning",
+        button: "OK!",
+      });
     }
   };
   return (

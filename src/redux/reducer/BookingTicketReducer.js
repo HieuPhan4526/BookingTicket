@@ -1,4 +1,5 @@
-import { BOOKING, DELETE_TICKET } from "../Types/BookingTicketTypes";
+import { BOOKING, DELETE_TICKET, RESET } from "../Types/BookingTicketTypes";
+import swal from "sweetalert";
 
 const stateDefault = {
     danhSachGheDangDat: [],
@@ -31,6 +32,19 @@ export const BookingTicketReducer = (state = stateDefault, action) => {
 
             return { ...state };
         }
+        case RESET: state.danhSachGheDangDat.map((gheDangDat, index) => {
+            if (gheDangDat) {
+                return swal({
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                    button: "OK!",
+                });
+            }
+        });
+            state.danhSachGheDangDat = [];
+            return { ...state };
+
         default:
             return state;
     }

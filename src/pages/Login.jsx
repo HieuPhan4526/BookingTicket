@@ -15,33 +15,25 @@ export default function Login(props) {
     const email = e.target[0].value;
     const password = e.target[1].value;
     try {
-      signInWithEmailAndPassword(auth, email, password)
-        .then(async (userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          await localStorage.setItem(
-            USER_LOGIN,
-            JSON.stringify(user.providerData[0])
-          );
-          await swal({
-            title: "Good job!",
-            text: "You clicked the button!",
-            icon: "success",
-            button: "OK!",
-          });
-          history.push("/");
-          // ...
-        })
-        .catch((error) => {
-          swal({
-            title: "Something went wrong",
-            text: "You clicked the button!",
-            icon: "warning",
-            button: "OK!",
-          });
-        });
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      await localStorage.setItem(
+        USER_LOGIN,
+        JSON.stringify(res.user.providerData[0])
+      );
+      await swal({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "OK!",
+      });
+      history.push("/");
     } catch (error) {
-      // console.log(error);
+      swal({
+        title: "Something went wrong",
+        text: "You clicked the button!",
+        icon: "warning",
+        button: "OK!",
+      });
     }
   };
 

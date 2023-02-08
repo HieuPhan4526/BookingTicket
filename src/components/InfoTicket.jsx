@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { DELETE_TICKET } from "../redux/Types/BookingTicketTypes";
+import { DELETE_TICKET, RESET } from "../redux/Types/BookingTicketTypes";
 import swal from "sweetalert";
 
 export default function InfoTicket() {
@@ -80,15 +80,8 @@ export default function InfoTicket() {
       <button
         className="btn btn-success"
         onClick={() => {
-          danhSachGheDangDat.map((gheDangDat, index) => {
-            if (gheDangDat) {
-              return swal({
-                title: "Good job!",
-                text: "You clicked the button!",
-                icon: "success",
-                button: "OK!",
-              });
-            }
+          dispatch({
+            type: RESET,
           });
         }}
       >
